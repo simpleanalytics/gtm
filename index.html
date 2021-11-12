@@ -5,10 +5,16 @@
     <title>Simple Analytics</title>
     <meta name="robots" content="noindex,nofollow">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+      window.isGtmLoaded = null;
+      function gtmLoaded(ok) {
+        window.isGtmLoaded = ok;
+      }
+    </script>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.onerror="window.gtmLoaded = false";j.onload="window.gtmLoaded = true";j.async=true;j.src=
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.onerror="gtmLoaded(false)";j.onload="gtmLoaded(true)";j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-KNX2B9L');</script>
     <!-- End Google Tag Manager -->
@@ -133,13 +139,13 @@
       window.addEventListener('DOMContentLoaded', (event) => {
         log('info', 'DOMContentLoaded');
         
-        if (typeof window.gtmLoaded !== 'boolean') {
+        if (typeof window.isGtmLoaded !== 'boolean') {
           log('error', 'GTM script onload or onerror are not working correctly');
         }
-        else if (window.gtmLoaded === false) {
+        else if (window.isGtmLoaded === false) {
           log('error', 'GTM script is blocked on your computer');
         }
-        else if (window.gtmLoaded === true) {
+        else if (window.isGtmLoaded === true) {
           log('info', 'GTM script is loaded');
         }
         
