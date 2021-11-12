@@ -9,30 +9,51 @@
     <!-- Simple Analytics events queue -->
     <script>window.sa_event=window.sa_event||function(){var a=[].slice.call(arguments);window.sa_event.q?window.sa_event.q.push(a):window.sa_event.q=[a]};</script>
 
+    <!-- Some test code for this page specifically -->
     <script>
-      window.isGtmLoaded = null;
+      sendEvent("before_gtm");
 
       function log(type = 'info', text) {
         console[type](text);
         document.querySelector("textarea").value += `${type.toUpperCase()}: ${text}\n`;
       }
 
+      function sendEvent(event) {
+        if (!window.sa_event) {
+          log('error', `Can't send "${event}" event, sa_event is not defined`);
+        }
+        else {
+          log('info', `Start sending event "${event}"`);
+          sa_event(event, function() {
+            log('info', '"${event}" event saved');
+          })
+        } 
+      }
+
       function gtmLoaded(ok) {
-        if (ok) log('info', 'GTM script is loaded');
-        else log('error', 'GTM script is blocked on your computer');
+        if (ok) {
+          log('info', 'GTM script is loaded');
+          sendEvent("after_gtm");
+        }
+        else {
+          log('error', 'GTM script is blocked on your computer');
+        }
       }
     </script>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){
-      w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-      var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-      j.onerror=() => gtmLoaded(false);
-      j.onload=() => gtmLoaded(true);
-      j.async=true;
-      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-      f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KNX2B9L');</script>
-    <!-- End Google Tag Manager -->
+    
+    <!-- Google Tag Manager script -->
+    <script>
+      (function(w,d,s,l,i){
+        w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+        var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+        j.onerror=() => gtmLoaded(false);
+        j.onload=() => gtmLoaded(true);
+        j.async=true;
+        j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+        f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-KNX2B9L');
+    </script>
+
     <style>
       /* Basics */
       body,
@@ -142,21 +163,5 @@
       
       <textarea readonly></textarea>
     </main>
-    
-    <script>
-      window.addEventListener('DOMContentLoaded', (event) => {
-        log('info', 'DOMContentLoaded');
-
-        if (!window.sa_event) {
-          log('error', 'sa_event is not defined');
-        }
-        else {
-          log('info', 'Start sending event "landing"');
-          sa_event('landing', function() {
-            log('info', 'Landing event saved, all working correctly');
-          })
-        }
-      });
-    </script>
   </body>
 </html>
