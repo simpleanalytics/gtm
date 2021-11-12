@@ -7,14 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
       window.isGtmLoaded = null;
+
+      function log(type = 'info', text) {
+        console[type](text);
+        document.querySelector("textarea").value += `${type.toUpperCase()}: ${text}\n`;
+      }
+
       function gtmLoaded(ok) {
+        log('info', `gtmLoaded: ${ok}`)
         window.isGtmLoaded = ok;
       }
     </script>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.onerror="gtmLoaded(false)";j.onload="gtmLoaded(true)";j.async=true;j.src=
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.onerror=gtmLoaded(false);j.onload=gtmLoaded(true);j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-KNX2B9L');</script>
     <!-- End Google Tag Manager -->
@@ -125,17 +132,10 @@
       <h2>Google Tag Manager</h2>
       <p>A test site to test GTM integrations.</p>
       
-      <textarea readonly>Loading...</textarea>
+      <textarea readonly></textarea>
     </main>
     
     <script>
-      function log(type = 'info', text) {
-        console[type](text);
-        document.querySelector("textarea").value += `${type.toUpperCase()}: ${text}\n`;
-      }
-      
-      document.querySelector("textarea").value = '';
-
       window.addEventListener('DOMContentLoaded', (event) => {
         log('info', 'DOMContentLoaded');
         
