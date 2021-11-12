@@ -33,7 +33,11 @@
       function gtmLoaded(ok) {
         if (ok) {
           log('info', 'GTM script is loaded');
-          sendEvent("after_gtm");
+          
+          log('info', 'Sending "after_gtm" event in 3 seconds...');
+          setTimeout(() => {
+            sendEvent("after_gtm");
+          }, 3000)
         }
         else {
           log('error', 'GTM script is blocked on your computer');
