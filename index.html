@@ -11,8 +11,6 @@
 
     <!-- Some test code for this page specifically -->
     <script>
-      sendEvent("before_gtm");
-
       function log(type = 'info', text) {
         console[type](text);
         document.querySelector("textarea").value += `${type.toUpperCase()}: ${text}\n`;
@@ -25,10 +23,12 @@
         else {
           log('info', `Start sending event "${event}"`);
           sa_event(event, function() {
-            log('info', '"${event}" event saved');
+            log('info', `"${event}" event saved`);
           })
         } 
       }
+
+      sendEvent("before_gtm");
 
       function gtmLoaded(ok) {
         if (ok) {
