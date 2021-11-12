@@ -116,11 +116,13 @@
       <h2>Google Tag Manager</h2>
       <p>A test site to test GTM integrations.</p>
       
-      <textarea readonly></textarea>
+      <textarea readonly>Loading JavaScript...</textarea>
     </main>
 
     <!-- Some test code for this page specifically -->
     <script>
+      document.querySelector("textarea").value = "";
+
       function log(type = 'info', text) {
         console[type](text);
         document.querySelector("textarea").value += `${type.toUpperCase()}: ${text}\n`;
