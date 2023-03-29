@@ -3,11 +3,20 @@
   <head>
     <meta charset="utf-8" />
     <title>Simple Analytics</title>
-    <meta name="robots" content="noindex,nofollow">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <!-- Simple Analytics events queue -->
-    <script>window.sa_event=window.sa_event||function(){var a=[].slice.call(arguments);window.sa_event.q?window.sa_event.q.push(a):window.sa_event.q=[a]};</script>
+    <script>
+      window.sa_event =
+        window.sa_event ||
+        function () {
+          var a = [].slice.call(arguments);
+          window.sa_event.q
+            ? window.sa_event.q.push(a)
+            : (window.sa_event.q = [a]);
+        };
+    </script>
 
     <style>
       /* Basics */
@@ -83,7 +92,7 @@
           color: #a4bdc0;
         }
       }
-      
+
       textarea {
         width: 550px;
         max-width: 100%;
@@ -95,8 +104,14 @@
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T6HX3HZ"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-T6HX3HZ"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <main>
       <svg
@@ -115,63 +130,76 @@
       </svg>
       <h2>Google Tag Manager</h2>
       <p>A test site to test GTM integrations.</p>
-      <p><a href="https://example.com/" target="_blank" rel="nofollow noopener">An external link</a> for testing automated events.</p>
-      
+      <p>
+        <a href="https://example.com/" target="_blank" rel="nofollow noopener"
+          >An external link</a
+        >
+        for testing automated events.
+      </p>
+
       <textarea readonly>Loading JavaScript...</textarea>
-      
-      <p>In the above console you should see <code>"before_gtm"</code> and <code>"after_gtm"</code> event sent correctly.</p>
-      <p>Source <a href="https://github.com/simpleanalytics/gtm">on GitHub</a></p>
+
+      <p>
+        In the above console you should see <code>"before_gtm"</code> and
+        <code>"after_gtm"</code> event sent correctly.
+      </p>
+      <p>
+        Source <a href="https://github.com/simpleanalytics/gtm">on GitHub</a>
+      </p>
     </main>
 
     <!-- Some test code for this page specifically -->
     <script>
       document.querySelector("textarea").value = "";
 
-      function log(type = 'info', text) {
+      function log(type = "info", text) {
         console[type](text);
-        document.querySelector("textarea").value += `${type.toUpperCase()}: ${text}\n`;
+        document.querySelector(
+          "textarea"
+        ).value += `${type.toUpperCase()}: ${text}\n`;
       }
 
       function sendEvent(event) {
         if (!window.sa_event) {
-          log('error', `Can't send "${event}" event, sa_event is not defined`);
+          log("error", `Can't send "${event}" event, sa_event is not defined`);
+        } else {
+          log("info", `Start sending event "${event}"`);
+          sa_event(event, function () {
+            log("info", `"${event}" event sent correctly`);
+          });
         }
-        else {
-          log('info', `Start sending event "${event}"`);
-          sa_event(event, function() {
-            log('info', `"${event}" event sent correctly`);
-          })
-        } 
       }
 
       sendEvent("before_gtm");
 
       function gtmLoaded(ok) {
         if (ok) {
-          log('info', 'GTM script is loaded');
-          
-          log('info', 'Sending "after_gtm" event in 3 seconds...');
+          log("info", "GTM script is loaded");
+
+          log("info", 'Sending "after_gtm" event in 3 seconds...');
           setTimeout(() => {
             sendEvent("after_gtm");
-          }, 3000)
-        }
-        else {
-          log('error', 'GTM script is blocked on your computer');
+          }, 3000);
+        } else {
+          log("error", "GTM script is blocked on your computer");
         }
       }
     </script>
-    
+
     <!-- Google Tag Manager script -->
     <script>
-      (function(w,d,s,l,i){
-        w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-        var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-        j.onerror=() => gtmLoaded(false);
-        j.onload=() => gtmLoaded(true);
-        j.async=true;
-        j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-        f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-T6HX3HZ');
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.onerror = () => gtmLoaded(false);
+        j.onload = () => gtmLoaded(true);
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-T6HX3HZ");
     </script>
   </body>
 </html>
