@@ -137,6 +137,26 @@
         for testing automated events.
       </p>
 
+      <form class="form-class" method="GET">
+        <input
+          type="text"
+          value="email@example.com"
+          name="email"
+          placeholder="Email address..."
+        />
+        <button type="submit">Submit</button>
+      </form>
+
+      <script>
+        document
+          .querySelector("form")
+          .addEventListener("submit", function (event) {
+            event.preventDefault();
+            var email = document.querySelector("input").value;
+            log("info", `Form submit with email "${email}"`);
+          });
+      </script>
+
       <textarea readonly>Loading JavaScript...</textarea>
 
       <p>
